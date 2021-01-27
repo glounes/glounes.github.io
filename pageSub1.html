@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+    <title>pageSub1</title>
+    <style>
+        p{
+            font-family: 'helvetica neue', helvetica, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            border: 2px solid rgba(0,0,200,0.6);
+            background: rgba(0,0,200,0.3);
+            color: rgba(0,0,200,0.6);
+            box-shadow: 1px 1px 2px rgba(0,0,200,0.4);
+            border-radius: 10px;
+            padding: 3px 10px;
+            display: inline-block;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<p>10</p>
+<audio
+        id="audio"
+        src="ressources/trex.mp3">
+    <code>audio</code> element.
+</audio>
+
+<button
+        id="Play"
+        type="button1">
+    Play
+</button>
+
+<button
+        id="Pause"
+        type="button1">
+    Pause
+</button>
+
+<button
+        id="Stop"
+        type="button1">
+    Stop
+</button>
+
+<canvas id="audioCompletion" width="250" height="250">
+</canvas>
+<canvas id="canvas" width="1500" height="1500">
+</canvas>
+
+<script>
+    function updateCanvas(){
+        point1=new Point(1500,1500,canvas);
+        point1.ache();
+    }
+
+
+
+    var Point = function(x,y,canvas)
+    {
+        this.canvas=canvas;
+        this.canvas2dContext=this.canvas.getContext("2d");
+        this.x=x;
+        this.y=y;
+
+        this.ache = function()
+        {
+
+
+            var i;
+            var x=0,y=0
+            for (i = 0; i < 50; i++) {
+                this.canvas2dContext.beginPath();
+                this.canvas2dContext.strokeStyle ="#"+Math.floor(Math.random()*16777215).toString(16);
+                this.canvas2dContext.moveTo(x,y)
+                x = Math.random()*500
+                y = Math.random()*500
+                if (Math.random()>0.4)
+                    this.canvas2dContext.bezierCurveTo((Math.random()*2-1)*500,(Math.random()*2-1)*500,(Math.random()*2-1)*500,(Math.random()*2-1)*500,x,y);
+                else
+                    this.canvas2dContext.arc(this.x*Math.random(),this.y*Math.random(),150*Math.random(),200*Math.random(),2*Math.PI*(Math.random()*2-1),false);
+                this.canvas2dContext.stroke();
+            }
+
+
+
+        }
+    }
+
+
+    let para = document.querySelector('p');
+    para.addEventListener('click', compteArebours);
+    handle = setInterval(compteArebours,1000);
+    i=10;
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.addEventListener('click',updateCanvas)
+    var i=0
+    rectangle()
+    function rectangle(){
+        i++
+        if (i%60 === 0){
+            ctx.fillStyle="#"+Math.floor(Math.random()*16777215).toString(16);
+            ctx.fillRect(Math.round(255*Math.random()), Math.round(255*Math.random()), Math.round(255*Math.random()), 75);
+        }
+        requestAnimationFrame(rectangle)
+    }
+
+
+
+    function compteArebours() {
+        i=i-1;
+        if(i===0){
+            clearInterval(handle)
+        }
+        para.textContent = i;
+    }
+    var ac = document.getElementById("audioCompletion");
+    //var time = ac.duration;
+
+    var cac = ac.getContext("2d");
+
+     var v = document.getElementById("audio");
+    //v.addEventListener("ended", function() { v.play(); }, true);
+    //v.currentTime = 0.0;
+    v.addEventListener("loadedmetadata", function() { time = v.duration}, true);
+    var time = v.duration
+    v.addEventListener("timeupdate", function() {
+        cac.beginPath();
+        cac.clearRect(0, 0, 1000, 1000);
+        cac.arc(100,75,50,0,Math.PI*2*v.currentTime/time);
+        let percent = Math.floor(v.currentTime/time*100);
+        cac.fillText('e%'.replace("e",percent.toString()) ,95, 75);
+        cac.stroke();
+    }, true);
+
+    document.getElementById("Play").onclick=play;
+    document.getElementById("Pause").onclick=pause;
+    document.getElementById("Stop").onclick=stop;
+    function play()
+    {
+            v.currentTime = 0.0;
+            v.play()
+    }
+
+    function pause()
+    {
+        v.pause();
+    }
+
+    function stop()
+    {
+        v.pause();
+        v.currentTime = 0;
+    }
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
