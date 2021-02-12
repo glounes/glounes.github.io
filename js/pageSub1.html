@@ -23,7 +23,7 @@
 <p>10</p>
 <audio
         id="audio"
-        src="ressources/trex.mp3">
+        src="../ressources/trex.mp3">
     <code>audio</code> element.
 </audio>
 
@@ -97,11 +97,11 @@
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     canvas.addEventListener('click',updateCanvas)
-    var i=0
+    var j=0
     rectangle()
     function rectangle(){
-        i++
-        if (i%60 === 0){
+        j++
+        if (j%60 === 0){
             ctx.fillStyle="#"+Math.floor(Math.random()*16777215).toString(16);
             ctx.fillRect(Math.round(255*Math.random()), Math.round(255*Math.random()), Math.round(255*Math.random()), 75);
         }
