@@ -1,0 +1,17 @@
+{
+    "name": "super vroum",
+    "short_name": "vroum",
+    "background_color": "red",
+    "description": "sauvegarde de donnees inutile",
+    "orientation": "portrait-primary",
+    "scope": "/monapp/",
+    "start_url": "./",
+    "display": "standalone",
+    "theme_color": "yellow",
+    "icons": [
+        {
+            "src": "../ressources/arch.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        }
+    ]
